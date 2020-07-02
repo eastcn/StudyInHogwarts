@@ -3,7 +3,6 @@ package junit5;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import javafx.scene.effect.MotionBlur;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

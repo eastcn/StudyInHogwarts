@@ -1,0 +1,5 @@
+name: testWeb
+desc: 测试web
+steps:
+  - click: {id: input}
+  - click: {id: text}
