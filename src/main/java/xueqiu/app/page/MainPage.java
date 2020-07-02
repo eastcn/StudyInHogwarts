@@ -11,36 +11,22 @@ import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class MainPage {
-    private AppiumDriver driver;
+public class MainPage extends BasePage{
+//    private AppiumDriver driver;
 
     public MainPage() {
-        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        desiredCapabilities.setCapability("platformName", "Android");
-        desiredCapabilities.setCapability("deviceName", "emulator-5554");
-        desiredCapabilities.setCapability("appPackage", "com.xueqiu.android");
-        desiredCapabilities.setCapability("noReset", "true");
-        desiredCapabilities.setCapability("appActivity", ".view.WelcomeActivityAlias");
-
-        try {
-            driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
     }
 
     public SearchPage toSearch() {
-        driver.findElement(By.id("com.xueqiu.android:id/home_search")).click();
+//        driver.findElement(By.id("com.xueqiu.android:id/home_search")).click();
+        click(By.id("home_search"));  // 使用自己封装的方法
         return new SearchPage(driver);
     }
 
-    public void quit() {
-        driver.quit();
-    }
+
 
     public MarketPage toMarket() {
-        List<WebElement> elementList = driver.findElements(By.id("com.xueqiu.android:id/tab_name"));
+        List<WebElement> elementList = findList(By.id("com.xueqiu.android:id/tab_name"));
         for (WebElement marketElement : elementList) {
             if (marketElement.getText().equals("行情")) {
                 System.out.println("查找到'行情'按钮,进行点击");
