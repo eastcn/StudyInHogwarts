@@ -1,8 +1,8 @@
 package testFramwork;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.openqa.selenium.By;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,13 +15,13 @@ public class BasePage {
 
     }
 
-    public void send() {
+    public void sendKeys(HashMap<String, Object> map) {
     }
 
     public void find() {
     }
 
-    public void action() {
+    public void action(HashMap<String, Object> map) {
         // 留一个通用的方法去实现特殊的动作
     }
 
@@ -32,9 +32,17 @@ public class BasePage {
     public void run(UIAuto uiAuto) {
         uiAuto.steps.stream().forEach(step -> {
                     if (step.containsKey("click")) {
-                        HashMap<String, Object> hashMap = (HashMap<String, Object>) step.get("click");
-                        System.out.println(hashMap.toString());
-                        click(hashMap);
+//                        HashMap<String, Object> hashMap = (HashMap<String, Object>) step.get("click");
+//                        System.out.println(hashMap.toString());
+                        click(step);
+                    }
+                    if (step.containsKey("input")) {
+//                        HashMap<String, Object> map = (HashMap<String, Object>) step.get("input");
+//                        String value = step.get("value").toString();
+                        sendKeys(step);
+                    }
+                    if (step.containsKey("action")) {
+                        action(step);
                     }
                 }
         );

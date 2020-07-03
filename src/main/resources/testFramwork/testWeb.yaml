@@ -1,5 +1,10 @@
 name: testWeb
 desc: 测试web
 steps:
-  - click: {id: input}
-  - click: {id: text}
+#  - click: {id: input}
+#  - click: {id: text}
+  - action: get
+    url: http://www.baidu.com
+  - input: {id: kw}
+    value: "hello"
+  - click: {id: su}

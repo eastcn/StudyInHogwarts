@@ -1,6 +1,9 @@
 package testWeb;
 
 import org.junit.jupiter.api.Test;
+import testFramwork.BasePage;
+import testFramwork.UIAuto;
+import testFramwork.UiAutoFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class WebBasePageTest {
 
+    static BasePage basePage = UiAutoFactory.createFactory("web");
     @Test
-    void click() {
+    void testWeb() {
+        UIAuto uiAuto = basePage.load("/testFramwork/testWeb.yaml");
+        basePage.run(uiAuto);
     }
 }
