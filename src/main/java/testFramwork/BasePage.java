@@ -21,13 +21,17 @@ public class BasePage {
     public void find() {
     }
 
+    public void getText(HashMap<String, Object> map) {
+        System.out.println("getText的id" + map.get("id").toString());
+    }
+
     public void action(HashMap<String, Object> map) {
         // 留一个通用的方法去实现特殊的动作
     }
 
     /**
      * @param uiAuto UI自动化用用例的case模型结构
-     *  传入case的模型结构进行执行，根据case中的关键字判断需要执行哪些action
+     *               传入case的模型结构进行执行，根据case中的关键字判断需要执行哪些action
      */
     public void run(UIAuto uiAuto) {
         uiAuto.steps.stream().forEach(step -> {
@@ -44,6 +48,10 @@ public class BasePage {
                     if (step.containsKey("action")) {
                         action(step);
                     }
+                    if (step.containsKey("getText")) {
+                        getText(step);
+                    }
+                    System.out.println("\n");
                 }
         );
     }
@@ -61,5 +69,11 @@ public class BasePage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void quit() {
+    }
+
+    public void close() {
     }
 }

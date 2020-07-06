@@ -31,7 +31,7 @@ public class WebBasePage extends BasePage {
     }
 
     /**
-     * @param by 定位
+     * @param by    定位
      * @param value 输入值
      *              sendKeys功能
      */
@@ -49,11 +49,17 @@ public class WebBasePage extends BasePage {
         driver.findElement(by).click();
     }
 
+    public String getText(By by) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return driver.findElement(by).getText();
+    }
+
     /**
      * @param map 加载yaml文件后生成的click类型的HashMap的定位方式
      */
     @Override
     public void click(HashMap<String, Object> map) {
+        System.out.println("test click");
         By by = checkMethod(map);
         click(by);
     }
@@ -67,39 +73,46 @@ public class WebBasePage extends BasePage {
     }
 
     /**
-     * @param map 加载yaml文件后生成的input类型的HashMap的定位方式
+     * @param map   加载yaml文件后生成的input类型的HashMap的定位方式
      * @param value 需要input的数据
      */
     @Override
     public void sendKeys(HashMap<String, Object> map) {
-        System.out.println("input ");
-        By by =  checkMethod(map);
+        System.out.println("test input ");
+        By by = checkMethod(map);
         sendKeys(by, map.get("value").toString());
+    }
+
+    @Override
+    public void getText(HashMap<String, Object> map) {
+        System.out.println("test getText");
+        By by = checkMethod(map);
+        System.out.println(getText(by));
     }
 
     /**
      * @param map 传入HashMap结构的数据内容，根据内容确定定位方式
      * @return 返回一个By类型的locator
      */
-    private By checkMethod(HashMap<String, Object> map){
+    private By checkMethod(HashMap<String, Object> map) {
         // 根据传入的定位符的方式分为：id、linkTest、partialLinkText、xPath,
         By by = null;
         String actionKey = (String) map.keySet().toArray()[0]; // 根据case模型定义，第一层map的key为动作
         HashMap<String, Object> actionValue = (HashMap<String, Object>) map.get(actionKey);
-
+        System.out.println(actionKey + ":");
         String locatorKey = (String) actionValue.keySet().toArray()[0]; // 第二层为 定位方式：id等
         String locatorValue = actionValue.get(locatorKey).toString();
         if (locatorKey.toLowerCase().equals("id")) {
-            System.out.println("by id");
+            System.out.println("by id:" + locatorValue);
             by = By.id(locatorValue);
         } else if (locatorKey.toLowerCase().equals("linkText".toLowerCase())) {
-            System.out.println("by linkText");
+            System.out.println("by linkText:" + locatorValue);
             by = By.linkText(locatorValue);
         } else if (locatorKey.toLowerCase().equals("partialLinkText".toLowerCase())) {
-            System.out.println("by partialLinkText");
+            System.out.println("by partialLinkText:" + locatorValue);
             by = By.partialLinkText(locatorValue);
         } else if (locatorKey.toLowerCase().equals("xpath")) {
-            System.out.println("by xpath");
+            System.out.println("by xpath:" + locatorValue);
             by = By.xpath(locatorValue);
         }
         return by;
@@ -107,7 +120,7 @@ public class WebBasePage extends BasePage {
 
     /**
      * @param map load解析的yaml文件中的每一个step
-     *        该方法用于实现一些 非通用基础方法，可以自定义灵活实现，具体方法为在条件语句中增加判断
+     *            该方法用于实现一些 非通用基础方法，可以自定义灵活实现，具体方法为在条件语句中增加判断
      */
     public void action(HashMap<String, Object> map) {
 //        super.action(map); // 如果在父类方法中也有定义通用方法，则需要先运行父类通用方法
@@ -115,12 +128,31 @@ public class WebBasePage extends BasePage {
             String actionValue = map.get("action").toString();
             if (actionValue.toLowerCase().equals("自定义方法")) {
                 System.out.println("此处实现自定义方法");
-            }else if (actionValue.toLowerCase().equals("get")) {
-                System.out.println("action: get");
+            } else if (actionValue.toLowerCase().equals("get")) {
+                System.out.println("test action: get");
+                System.out.println("get:" + map.get("url").toString());
                 driver.get(map.get("url").toString());
             }
 
         }
+    }
+
+    /**
+     * 退出网页
+     */
+    public void quit() {
+//        driver.close();
+        System.out.println("driver quit");
+        driver.quit();
+    }
+
+    /**
+     * 关闭当前浏览器页面
+     */
+    public void close() {
+//        driver.close();
+        System.out.println("driver close");
+        driver.close();
     }
 
 }

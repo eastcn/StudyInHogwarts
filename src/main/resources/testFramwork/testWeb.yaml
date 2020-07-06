@@ -5,6 +5,7 @@ steps:
 #  - click: {id: text}
   - action: get
     url: http://www.baidu.com
+  - getText: {id: s-usersetting-top}
   - input: {id: kw}
     value: "hello"
   - click: {id: su}
