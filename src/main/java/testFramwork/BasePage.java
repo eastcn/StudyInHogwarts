@@ -56,6 +56,9 @@ public class BasePage {
         );
     }
 
+    public void setWindowSize(int x, int y){
+
+    }
     public UIAuto load(String path) {
         // 定义一个读取yaml的mapper
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());

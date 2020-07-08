@@ -1,13 +1,14 @@
 package testWeb;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import testFramwork.BasePage;
-import testFramwork.UIAuto;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class WebBasePage extends BasePage {
     public WebBasePage() {
         ChromeOptions chromeOptions = new ChromeOptions();
         // 开启开发者模式
+        chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) MicroMessenger/6.8.0(0x16080000) MacWechat/2.4.1(0x12040110) NetType/WIFI WindowsWechat");
         chromeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         driver = new ChromeDriver(chromeOptions);
         // 显示等待控制, 参数：driver、 等待总时长、查找频率
@@ -38,6 +40,15 @@ public class WebBasePage extends BasePage {
     public void sendKeys(By by, String value) {
         System.out.println("input " + value);
         driver.findElement(by).sendKeys(value);
+    }
+
+    public void setCookies(String name, String value, String domain) {
+        Cookie cookie = new Cookie(name, value, domain, null, null);
+        driver.manage().addCookie(cookie);
+    }
+
+    public void setWindowSize(int x, int y) {
+        driver.manage().window().setSize(new Dimension(x, y));
     }
 
     /**
