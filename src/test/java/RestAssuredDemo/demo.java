@@ -1,5 +1,6 @@
 package RestAssuredDemo;
 
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +17,8 @@ import static io.restassured.RestAssured.given;
  */
 public class demo {
     public static String token;
-    public final static String corpid = "corpid";
-    public final static String corpsecret = "corpsecret";
+    public final static String corpid = "xxxxx";
+    public final static String corpsecret = "xxxx";
 
     @BeforeAll
     @Test
@@ -45,7 +46,10 @@ public class demo {
                 "   \"enable_id_trans\": 0,\n" +
                 "   \"enable_duplicate_check\": 0,\n" +
                 "   \"duplicate_check_interval\": 1800\n" +
-                "}").contentType("application/json;charset=utf-8").post(url).
+                "}")
+                .contentType(ContentType.JSON)
+                .queryParam("access_token", token)
+                .post(url).
                 then().log().all();
 //        System.out.println(token);
     }
