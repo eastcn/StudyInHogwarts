@@ -1,0 +1,7 @@
+name: department
+methods:
+  create:
+    method: POST
+    query:
+      access_token: token
+      body:
